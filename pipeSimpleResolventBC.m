@@ -6,7 +6,7 @@
 % om: frequency
 % Fourier decomposition: u(r)exp(i*[k*x+n*theta-om*t])
 % N : number of grid points in r:(0,1]
-function [r,su,ss,sv,sp,L,H,U0,yP,UP,dU0,dr] = pipeSimpleResolvent(Re,k,n,om,N)
+function [r,su,ss,sv,sp,L,H,U0,yP,UP,dU0,dr] = pipeSimpleResolventBC(Re,k,n,om,N,yPc)
 % The Navier-Stokes equations can be written as: M(dx/dt) = Lx + Mf
 % Here x = [u;v;w;p], L is a linear operator and f is the forcing
 % comprising the nonlinear terms. M is a modified mass matrix
@@ -69,36 +69,24 @@ M = [I Z Z Z; Z I Z Z; Z Z I Z; Z Z Z Z];
 % Scale omega with centerline velocity
 omt = om*max(U0);
 
+% Basic matrices for Resolvent
 LHS = -1i*omt*M-L;
-LHS(:,1:N:3*N) = [];
-
 RHS = M; 
-RHS(:,1:N:3*N) = []; 
 
-% At this point the problem is overspecificed (4*N eqns for 4*N-3 vars)
-% The velocities at the wall are known, but we have retained the momentum-
-% and continuity equations at the wall. 
-% In theory, we should only need one of the three momentum equations at the
-% wall to specify pressure. See e.g. Gresho and Sani, Int J Numer Methods
-% Fluids, 7:1111 (1987). 
-% Alternatively, we can retain all the conditions.  This will lead to
-% MATLAB doing the inversion below (LHS\RHS) in a least-squares sense. 
+% Implement boundary conditions
+LHS([1 N+1 2*N+1],:) = 0;
+% u - no slip
+LHS(1,1) = 1;
+% v - opposition control
+ci = find(yP>yPc,1);
 
-% % Keep only axial stress boundary condition
-% LHS([N+1 2*N+1 3*N+1],:) = []; 
-% RHS([N+1 2*N+1 3*N+1],:) = []; 
-% 
-% % Keep only radial stress boundary condition
-% LHS([1 2*N+1 3*N+1],:) = []; 
-% RHS([1 2*N+1 3*N+1],:) = []; 
-% 
-% % Keep only azimuthal stress boundary condition
-% LHS([1 N+1 3*N+1],:) = []; 
-% RHS([1 N+1 3*N+1],:) = []; 
-% 
-% Keep only continuity at the wall
-LHS([1 N+1 2*N+1],:) = []; 
-RHS([1 N+1 2*N+1],:) = []; 
+LHS(N+1,N+1) =-1;
+LHS(N+1,N+ci)= 1;
+% w - no slip
+LHS(2*N+1,2*N+1)=1;
+
+% Make sure the forcing modes have the same behavior
+RHS(1:N:end,:) = 0;
 
 % Create modified resolvent matrix H
 H = LHS\RHS;
@@ -112,12 +100,6 @@ iIW  = eye(length(half))/IW;
 % Do not include pressure in the norm
 sqW  = [IW Z Z Z; Z IW Z Z; Z Z IW Z; Z Z Z Z];
 isqW = [iIW Z Z Z; Z iIW Z Z; Z Z iIW Z; Z Z Z Z];
-
-% Get rid of rows and columns corresponding to u,v,w at r = 1
-sqW(:,1:N:3*N)=[];
-sqW(1:N:3*N,:)=[];
-isqW(:,1:N:3*N)=[];
-isqW(1:N:3*N,:)=[];
 
 % Weighted resolvent
 HW = sqW*H*isqW;
@@ -139,7 +121,3 @@ sv = sv*diag(exp(phase_shift));
 sp = H*sv;
 sp = sp*diag(1./ss);
 sp = sp(end-N+1:end,:);
-
-% Add the zero velocity and forcing at r = 1 back in
-su = [zeros(1,nsvd); su(1:N-1,:); zeros(1,nsvd); su(N:2*N-2,:); zeros(1,nsvd); su(2*N-1:end,:)];
-sv = [zeros(1,nsvd); sv(1:N-1,:); zeros(1,nsvd); sv(N:2*N-2,:); zeros(1,nsvd); sv(2*N-1:end,:)];
