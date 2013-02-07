@@ -1,14 +1,13 @@
-function [ r, dr, D1E, D1O, D2E, D2O, IW ] = pipeCoords( n, N )
+function [r, dr, D1E, D1O, D2E, D2O] = pipeCoords( n, N )
 % Function to set up the coordinate system, differentiation and integration
 % matrices for the pipe geometry.
 
-% Created by Mitul Luhar, 10/22/2012
+% Created by Mitul Luhar, 02/06/2013
 
 % r: radial coordinate (0,1]
 % dr: integration weights
 % D1E,D1O:  Even and odd first difference matrices
 % D2E,D2O:  Even and odd second difference matrices
-% IW is the integration weights matrix
 
 [x,DM] = chebdif(2*N,2); % x:[-1 1]
 half   = 1:N;            % indices corresponding to x:(0,1]
@@ -28,7 +27,6 @@ D2O = D2(half,half) - s*D2(half,2*N+1-half);
 % Find integration weights
 [~,dr] = clencurt(2*N-1);
 dr   = (dr(half))';
-IW   = sqrtm(diag(r.*dr));
 
 end
 
