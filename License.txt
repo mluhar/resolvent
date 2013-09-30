@@ -1,6 +1,5 @@
 Copyright (c) 2013, California Institute of Technology (Caltech)
 Copyright (c) 2013, University of Southampton
-Copyright (c) 2013, Air Force Office of Scientific Research (AFOSR)
 
 All rights reserved.
 
