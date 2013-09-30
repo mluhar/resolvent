@@ -7,6 +7,8 @@ function [L,M] = pipeOperators(Re,k,n,r,D1O,D1E,D2O,D2E,U0,dU0)
 % k,n: axial/azimuthal wave number
 % D1O,D1E,D2O,D2E: finite difference matrices
 
+% Written by Mitul Luhar on 02/11/2013
+
 % A few basic matrices to improve readability
 I   = eye(length(r));
 Z   = zeros(length(r));

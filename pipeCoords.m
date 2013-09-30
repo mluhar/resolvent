@@ -2,7 +2,7 @@ function [r, dr, D1E, D1O, D2E, D2O] = pipeCoords( n, N )
 % Function to set up the coordinate system, differentiation and integration
 % matrices for the pipe geometry.
 
-% Created by Mitul Luhar, 02/06/2013
+% Written by Mitul Luhar, 02/06/2013
 
 % r: radial coordinate (0,1]
 % dr: integration weights

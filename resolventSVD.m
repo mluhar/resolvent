@@ -1,6 +1,7 @@
 function [r,su,ss,sv,U0,yP,UP,dU0,dr] = resolventSVD(Re,k,n,om,N,nsvd,varargin)
 % This code computes the singular value decomposition of  the Navier-Stokes
 % resolvent for turbulent pipe flow
+% Based on the turbulent pipe flow model proposed by McKeon & Sharma (2010)
 % Written by Mitul Luhar on 02/06/2013
 
 % After Fourier decomposition, u(r)exp(i*[k*x+n*theta-om*t]), the 
@@ -12,9 +13,10 @@ function [r,su,ss,sv,U0,yP,UP,dU0,dr] = resolventSVD(Re,k,n,om,N,nsvd,varargin)
 % L is a linear operator and f are the nonlinear 'forcing' terms. 
 % M is a modified mass matrix.  The resolvent is: (-1i*om*M - L)\M
 
+%INPUTS
 % Re: Reynolds number based on pipe radius and 2x bulk-avg. velocity
-% n : azimuthal wave number (has to be an integer!)
 % k : axial wave number (k > 0)
+% n : azimuthal wave number (has to be an integer!)
 % om: radian frequency scaled such that phase speed c = om/k is normalized 
 % based on centerline velocity
 % N : number of grid points in r:(0,1]
@@ -69,7 +71,7 @@ else
 end
 
 %% Scale Resolvent
-% Currently, the resolvent is scaled to yield unit l2 norm for the singular
+% Currently, the resolvent is scaled to yield unit L2 norm for the singular
 % forcing and response modes.  Alternative norms may be considered.
 IW   = sqrtm(diag(r.*dr));
 iIW  = eye(length(r))/IW;
@@ -89,8 +91,13 @@ ss = diag(ssW);
 % su: singular response (velocity) modes
 % sv: singular forcing modes
 
-% set phase near critical layer to be zero
-phase_shift = -1i*angle(su(find((omt/k)>U0,1),:));
+% set phase of first non-zero point based on critical layer
+if(om/k < 1)
+    ind = find((U0/max(U0))>(om/k),1,'first');
+else
+    ind = N;
+end
+phase_shift = -1i*angle(su(ind,:));
 sv = sv*diag(exp(phase_shift));
 
 % Because of the l2 norm used to scale the resolvent, we do not have any

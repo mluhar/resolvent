@@ -1,6 +1,12 @@
-% convert Fourier to physical coordinates
+% Function to convert Fourier modes to physical coordinates
 % function [U]=fourier2physical(u(r),k,z,n,theta,[omega,t]);
 function [U]=fourier2physical(u,k,x,n,theta,varargin)
+% U is the fourier-transformed velocity field
+% u is the input (complex) mode shape
+% k,n : streamwise, azimuthal wavenumber
+% x,theta: streamwise, azimuthal coordinates
+
+% Optional can also include frequency (omega) and time (t) as inputs
 
 if length(varargin)
 	exp_omegat=exp(-1i*varargin{1}*varargin{2});

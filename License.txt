@@ -1,0 +1,32 @@
+Copyright (c) 2013, California Institute of Technology (Caltech)
+Copyright (c) 2013, University of Southampton
+Copyright (c) 2013, Air Force Office of Scientific Research (AFOSR)
+
+All rights reserved.
+
+-----
+This software is based on research performed by Dr. Beverley McKeon and Dr. Mitul Luhar at Caltech under award FA9550-12-1-0469 from the AFOSR(program manager Dr. Douglas Smith), and by Dr. Ati Sharma at the University of Southampton. Neither the name of the California Institute of Technology (Caltech), the University of Southampton, nor the names of their contributors (and/or sponsors) may be used to endorse or promote products derived from this software without specific prior written permission.  
+
+This software employs the MATLAB differentiation matrix suite created by Dr. J.A.C. Weideman and Dr. S.C. Reddy (available at http://dip.sun.ac.za/~weideman/research/differ.html) and a subroutine written by Dr. Lloyd Trefethen (available at http://people.maths.ox.ac.uk/trefethen/clencurt.m).  All original copyrights (and other rights) of these authors are retained.
+
+-----
+This work is provided under the Creative Commons Attribution-ShareAlike 3.0 License.  The full license is available at http://creativecommons.org/licenses/by-sa/3.0/
+
+This is a human-readable summary of the full license:
+
+You are free:
+to Share — to copy, distribute and transmit the work, and
+to Remix — to adapt the work
+
+Under the following conditions:
+Attribution — You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work.)
+Share Alike — If you alter, transform, or build upon this work, you may distribute the resulting work only under the same, similar or a compatible license.
+
+With the understanding that:
+Waiver — Any of the above conditions can be waived if you get permission from the copyright holder.
+Other Rights — In no way are any of the following rights affected by the license: your fair dealing or fair use rights; the author's moral rights; and rights other persons may have either in the work itself or in how the work is used, such as publicity or privacy rights.
+Notice — For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do that is with a link to http://creativecommons.org/licenses/by-sa/3.0/
+
+UNLESS OTHERWISE MUTUALLY AGREED TO BY THE PARTIES IN WRITING, LICENSOR OFFERS THE WORK AS-IS AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE WORK, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE, INCLUDING, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTIBILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR THE ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OF ABSENCE OF ERRORS, WHETHER OR NOT DISCOVERABLE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SUCH EXCLUSION MAY NOT APPLY TO YOU.
+
+EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY FOR ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
