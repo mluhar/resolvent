@@ -23,9 +23,15 @@ function [r,su,ss,sv,U0,yP,UP,dU0,dr] = resolventSVD(Re,k,n,om,N,nsvd,varargin)
 % nsvd: number of singular modes to compute
 
 % varargin specifies the boundary condition
+
 % varargin = {} - no slip
-% varargin = {yPD,AD}: opposition control with detection at yPD from the
+
+% varargin = {'OC',yPD,AD}: opposition control with detection at yPD from
 % wall (in plus units), with amplitude AD, such that v(yPD) = -AD*v(0)
+
+% varargin = {'compliant',freqRatio,dampRatio,massRatio}: compliant surface
+% with frequency ratio, damping ratio and mass ratio as specified.  See
+% pipeBCCompliantSHM.m for further detail
 
 %% Coordinate system based on Chebyshev collocation
 [r,dr,D1E,D1O,D2E,D2O] = pipeCoords(n,N);
@@ -64,10 +70,17 @@ RHS = M;
 % Impose boundary conditions (BC) and calculate resolvent, H = (LHS/RHS)
 if(isempty(varargin))
     % No slip
-    H = pipeBC(LHS,RHS,yP,N);
+    H = pipeBC(LHS,RHS,yP,N); 
 else
-    % Opposition Control
-    H = pipeBC(LHS,RHS,yP,N,varargin{1},varargin{2});
+    % User specified: opposition control (OC) or compliant wall (compliant)
+    switch varargin{1}
+        case 'OC'
+            H = pipeBC(LHS,RHS,yP,N,varargin{2},varargin{3});
+        case 'compliant'
+            H = pipeBCCompliantSHM(LHS,RHS,dU0,omt,varargin{2},varargin{3},varargin{4});
+        otherwise
+            error('myApp:argChk','Please specify appropriate boundary condition: OC or compliant')
+    end
 end
 
 %% Scale Resolvent
