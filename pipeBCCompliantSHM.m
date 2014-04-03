@@ -2,7 +2,8 @@ function [H] = pipeBCCompliantSHM(LHS,RHS,dU0,omt,freqRatio,dampRatio,massRatio)
 % Function to impose boundary conditions for Navier-Stokes Resolvent
 % This accounts for a simple compliant surface model, which essentially
 % leads to a harmonic-motion relationship between pressure and velocity
-% Written by Mitul Luhar on 03/02/2014
+% Original: Ati Sharma 02/15/2013
+% Modified: Mitul Luhar 03/02/2014
 
 % After Fourier decomposition, the Navier-Stokes eqns are:
 % (-1i*omt*M - L)x = Mf , or LHS x = RHS f
